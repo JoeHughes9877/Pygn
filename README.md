@@ -1,18 +1,23 @@
-isnt this fun mate# ...
-# Update for 2 July 2025
-# Update for 3 July 2025
- 
- cock
- balls
- fanny
- tiddies 
- why is my cock gay 
- boobies
+# Pygn
 
+Pygn is my C++ implementation of the Boids algorithm using OpenGL.  
+It’s a simple, visual way to explore how groups of Pigons "boids" move and interact.
 
- why are my balls tiddies d
+## Motivation
 
- uno my arse is hairy 
- wanker 
- cunt 
- b oo b
+I built this project to get better at C++ and to try out an algorithm that’s fun to see.
+
+## Features
+
+- Left click to create obstacles.  
+- Right click to add pigeons (boids) into the scene.
+
+## Installation
+
+Clone the repo and build it with:
+
+```bash
+git clone https://github.com/JoeHughes9877/Pygn.git
+cd pygn
+make
+sudo make install
