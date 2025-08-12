@@ -4,7 +4,7 @@ Pygn is my C++ implementation of the Boids algorithm using OpenGL.
 It’s a simple, visual way to explore how groups of Pigons "boids" move and interact.
 
 ## Motivation
-
+ 
 I built this project to get better at C++ and to try out an algorithm that’s fun to see.
 
 ## Features
