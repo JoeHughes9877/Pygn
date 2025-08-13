@@ -1,6 +1,6 @@
 CXX := g++
-CXXFLAGS := -Wall -Wextra -std=c++17 -Iinclude
-LDFLAGS := -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+CXXFLAGS := -Wall -Wextra -std=c++17 -Iinclude -I/usr/include -I/usr/local/include
+LDFLAGS := -lraylib -lm -ldl -lpthread -lGL -lX11
 
 SRC_DIR := src
 OBJ_DIR := obj
