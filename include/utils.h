@@ -1,3 +1,3 @@
 #include "raylib.h"
 
-void create_boid(Texture2D sprite, int x, int y);
+void create_boid(Vector2 v1, Vector2 v2, Vector2 v3);
