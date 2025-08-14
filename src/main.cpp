@@ -1,21 +1,21 @@
+#include "../include/main.h"
 #include "../include/utils.h"
 #include "raylib.h"
 
 int main(void) {
   InitWindow(800, 450, "raylib [core] exampwle - basic window");
 
-  Texture2D sprite = LoadTexture("boid.jpg");
+  struct boid b = {{10, 0}, {1, 25}, {19, 25}};
 
   while (!WindowShouldClose()) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-    create_boid(sprite, 0, 0);
+    create_boid(b.v1, b.v2, b.v3);
 
     EndDrawing();
   }
 
-  UnloadTexture(sprite);
   CloseWindow();
   return 0;
 }
