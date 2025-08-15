@@ -4,19 +4,27 @@
 #include <bits/stdc++.h>
 #include <vector>
 
-std::vector<boid> boids = {{10, 0}, {1, 25}, {19, 25}};
+std::vector<boid> boids;
 
 int main(void) {
-  InitWindow(800, 450, "raylib [core] exampwle - basic window");
+  InitWindow(800, 450, "Boids simulation");
   SetTargetFPS(10);
 
+  boids = {{{10, 100}, {0, 0}, {0, 0}},
+           {{10, 100}, {0, 0}, {0, 0}},
+           {{10, 100}, {0, 0}, {0, 0}}};
+
   while (!WindowShouldClose()) {
+    int amount_of_boids = 0;
+
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-    int amount_of_boids = boids.size();
+    amount_of_boids = boids.size();
 
     for (int i = 0; i < amount_of_boids; i++) {
+      create_boid(boids[i].v1, boids[i].v2, boids[i].v3);
+
       boids[i].v1.x += 5;
       boids[i].v1.y += 5;
 
@@ -26,10 +34,8 @@ int main(void) {
       boids[i].v3.x += 5;
       boids[i].v3.y += 5;
     }
-
-    EndDrawing();
   }
-
+  EndDrawing();
   CloseWindow();
   return 0;
 }
