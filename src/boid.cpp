@@ -44,6 +44,8 @@ void move_boid(int index) {
 }
 
 void detect_other_boids(boid b) {
+  std::vector<boid> neighbours;
+
   int amount_of_boids = boids.size();
 
   // converting 2D to 3D as CheckCollisionSpheres is 3D exclusive (y is 0.0f as
@@ -58,7 +60,20 @@ void detect_other_boids(boid b) {
         CheckCollisionSpheres(boid_pos_3D, 5.0f, other_boid_pos_3D, 0.5f);
 
     if (detected) {
-      // TODO
+      neighbours.push_back(boids[i]);
     }
   }
+  // TODO
+}
+
+void alignment(std::vector<boid> &vec, boid b) {
+  // TODO
+}
+
+void cohesion(std::vector<boid> &vec, boid b) {
+  // TODO
+}
+
+void separation(std::vector<boid> &vec, boid b) {
+  // TODO
 }
