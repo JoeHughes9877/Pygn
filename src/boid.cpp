@@ -1,6 +1,6 @@
 #include "../include/boid.h"
 #include "raylib.h"
-#include <cstdlib>
+#include <cmath>
 #include <vector>
 
 float size = 10;
@@ -8,7 +8,7 @@ float size = 10;
 void create_boid(Vector2 pos) {
   boid b;
   b.position = pos;
-  b.velocity = {0, 0};
+  b.velocity = {5, 5};
   b.angle = 0; // for now
 
   boids.push_back(b);
@@ -22,6 +22,9 @@ void render_boid(Vector2 pos) {
   DrawTriangle(v1, v2, v3, BLACK);
 }
 
-void move_boid(boid b) {
-  // TODO
+void move_boid(boid b, int index) {
+  boids[index].angle = atan2(b.velocity.y, b.velocity.x);
+
+  boids[index].position.x += boids[index].velocity.x;
+  boids[index].position.y += boids[index].velocity.y;
 }
