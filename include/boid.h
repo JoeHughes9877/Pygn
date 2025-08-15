@@ -6,6 +6,8 @@ struct boid {
   Vector2 velocity;
   float angle;
   float detection_area;
+  float steering_x;
+  float steering_y;
 };
 
 extern std::vector<boid> boids;
