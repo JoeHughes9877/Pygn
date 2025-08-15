@@ -43,7 +43,7 @@ void move_boid(int index) {
   boids[index].position.y += boids[index].velocity.y;
 }
 
-void detect_other_boids(boid b) {
+void detect_other_boids(boid &b) {
   std::vector<boid> neighbours;
 
   int amount_of_boids = boids.size();
@@ -63,19 +63,27 @@ void detect_other_boids(boid b) {
       neighbours.push_back(boids[i]);
     }
   }
-  alignment(neighbours, b);
-  cohesion(neighbours, b);
-  separation(neighbours, b);
+  if (neighbours.size() != 0) {
+    alignment(neighbours, b);
+    // cohesion(neighbours, b);
+    // separation(neighbours, b);
+  }
 }
 
-void alignment(std::vector<boid> &vec, boid b) {
-  // TODO
+void alignment(std::vector<boid> &vec, boid &b) {
+  int arr_len = vec.size();
+  float total_value_x = 0;
+  float total_value_y = 0;
+
+  for (int i = 0; i < arr_len; i++) {
+    total_value_x += vec[i].velocity.x;
+    total_value_y += vec[i].velocity.y;
+  }
+
+  b.velocity.x = total_value_x / arr_len;
+  b.velocity.y = total_value_y / arr_len;
 }
 
-void cohesion(std::vector<boid> &vec, boid b) {
-  // TODO
-}
+void cohesion(std::vector<boid> &vec, boid b) { return; }
 
-void separation(std::vector<boid> &vec, boid b) {
-  // TODO
-}
+void separation(std::vector<boid> &vec, boid b) { return; }
