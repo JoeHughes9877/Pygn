@@ -8,7 +8,7 @@ std::vector<boid> boids;
 
 int main(void) {
   InitWindow(800, 450, "Boids simulation");
-  SetTargetFPS(10);
+  SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
     BeginDrawing();
