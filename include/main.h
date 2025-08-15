@@ -3,9 +3,9 @@
 #include "raylib.h"
 
 struct boid {
-  Vector2 v1;
-  Vector2 v2;
-  Vector2 v3;
+  Vector2 position;
+  Vector2 velocity;
+  float angle;
 };
 
 extern std::vector<boid> boids;
