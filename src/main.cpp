@@ -10,32 +10,34 @@ int main(void) {
   InitWindow(800, 450, "Boids simulation");
   SetTargetFPS(10);
 
-  boids = {{{10, 100}, {0, 0}, {0, 0}},
-           {{10, 100}, {0, 0}, {0, 0}},
-           {{10, 100}, {0, 0}, {0, 0}}};
+  boids = {
+      {{0, 10}, {1, 25}, {19, 25}},
+      {{10, 50}, {1, 100}, {50, 25}},
+  };
 
   while (!WindowShouldClose()) {
     int amount_of_boids = 0;
 
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(WHITE);
 
     amount_of_boids = boids.size();
 
     for (int i = 0; i < amount_of_boids; i++) {
-      create_boid(boids[i].v1, boids[i].v2, boids[i].v3);
+      render_boid(boids[i].v1, boids[i].v2, boids[i].v3);
 
-      boids[i].v1.x += 5;
-      boids[i].v1.y += 5;
+      boids[i].v1.x += 1;
+      boids[i].v1.y += 1;
 
-      boids[i].v2.x += 5;
-      boids[i].v2.y += 5;
+      boids[i].v2.x += 1;
+      boids[i].v2.y += 1;
 
-      boids[i].v3.x += 5;
-      boids[i].v3.y += 5;
+      boids[i].v3.x += 1;
+      boids[i].v3.y += 1;
     }
+    EndDrawing();
   }
-  EndDrawing();
+
   CloseWindow();
   return 0;
 }
