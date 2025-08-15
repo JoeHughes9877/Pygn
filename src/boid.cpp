@@ -8,7 +8,7 @@ float size = 10;
 void create_boid(Vector2 pos) {
   boid b;
   b.position = pos;
-  b.velocity = {5, 5};
+  b.velocity = {0, 1};
   b.angle = 0; // for now
 
   boids.push_back(b);
