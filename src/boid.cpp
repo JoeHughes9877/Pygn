@@ -59,7 +59,7 @@ void detect_other_boids(boid b) {
         CheckCollisionSpheres(boid_pos_3D, 5.0f, other_boid_pos_3D, 0.5f);
 
     if (detected) {
-      std::cout << "COLLISION!!!";
+      // TODO
     }
   }
 }
