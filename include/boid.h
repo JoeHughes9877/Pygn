@@ -10,5 +10,5 @@ struct boid {
 extern std::vector<boid> boids;
 
 void create_boid(Vector2 pos);
-void move_boid(boid b);
+void move_boid(boid b, int index);
 void render_boid(Vector2 pos);
