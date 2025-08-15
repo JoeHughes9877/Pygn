@@ -63,7 +63,9 @@ void detect_other_boids(boid b) {
       neighbours.push_back(boids[i]);
     }
   }
-  // TODO
+  alignment(neighbours, b);
+  cohesion(neighbours, b);
+  separation(neighbours, b);
 }
 
 void alignment(std::vector<boid> &vec, boid b) {
