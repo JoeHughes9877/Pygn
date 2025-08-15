@@ -8,7 +8,7 @@ INC_DIR := include
 
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)
 OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
-TARGET := pign
+TARGET := pygn
 
 all: $(TARGET)
 
