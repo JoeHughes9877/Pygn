@@ -24,7 +24,7 @@ int main(void) {
     int amount_of_boids = boids.size();
     for (int i = 0; i < amount_of_boids; i++) {
       render_boid(boids[i].position);
-      move_boid(boids[i]);
+      move_boid(boids[i], i);
     }
 
     EndDrawing();
