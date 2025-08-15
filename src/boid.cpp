@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include <cmath>
 #include <cstdlib>
+#include <iostream>
 #include <vector>
 
 float size = 10;
@@ -13,6 +14,7 @@ void create_boid(Vector2 pos) {
   b.position = pos;
   b.velocity = {0, 0};
   b.angle = 0;
+  b.detection_area = 5.0;
 
   boids.push_back(b);
   int arr_len = boids.size();
@@ -40,4 +42,24 @@ void init_movement(int index) {
 void move_boid(int index) {
   boids[index].position.x += boids[index].velocity.x;
   boids[index].position.y += boids[index].velocity.y;
+}
+
+void detect_other_boids(boid b) {
+  int amount_of_boids = boids.size();
+
+  // converting 2D to 3D as CheckCollisionSpheres is 3D exclusive (y is 0.0f as
+  // its still "2D")
+  Vector3 boid_pos_3D = {b.position.x, 0.0f, b.position.y};
+
+  for (int i = 0; i < amount_of_boids; i++) {
+    Vector3 other_boid_pos_3D = {boids[i].position.x, 0.0f,
+                                 boids[i].position.y};
+
+    bool detected =
+        CheckCollisionSpheres(boid_pos_3D, 5.0f, other_boid_pos_3D, 0.5f);
+
+    if (detected) {
+      std::cout << "COLLISION!!!";
+    }
+  }
 }
