@@ -2,7 +2,6 @@
 #include "raylib.h"
 #include <cmath>
 #include <cstdlib>
-#include <iostream>
 #include <vector>
 
 float size = 10;
