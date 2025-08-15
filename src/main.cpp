@@ -1,5 +1,5 @@
 #include "../include/main.h"
-#include "../include/utils.h"
+#include "../include/boid.h"
 #include "raylib.h"
 #include <bits/stdc++.h>
 #include <vector>
@@ -14,7 +14,8 @@ int main(void) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) ||
+        IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
       Vector2 mouse_pos = GetMousePosition();
 
       create_boid(mouse_pos);
@@ -23,6 +24,7 @@ int main(void) {
     int amount_of_boids = boids.size();
     for (int i = 0; i < amount_of_boids; i++) {
       render_boid(boids[i].position);
+      move_boid(boids[i]);
     }
 
     EndDrawing();
