@@ -25,6 +25,7 @@ int main(void) {
     for (int i = 0; i < amount_of_boids; i++) {
       render_boid(boids[i].position);
       move_boid(i);
+      detect_other_boids(boids[i]);
     }
 
     EndDrawing();
