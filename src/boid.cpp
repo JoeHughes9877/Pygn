@@ -6,6 +6,7 @@
 #include <vector>
 
 float size = 10;
+const float SPEED = 2.0;
 
 void init_movement(int index);
 
@@ -14,7 +15,7 @@ void create_boid(Vector2 pos) {
   b.position = pos;
   b.velocity = {0, 0};
   b.angle = 0;
-  b.detection_area = 1000000000.0;
+  b.detection_area = 5.0f;
   b.steering_x = 0;
   b.steering_y = 0;
 
@@ -36,7 +37,7 @@ void init_movement(int index) {
   float angle = static_cast<float>(rand()) / RAND_MAX * 2 * 3.1415926f;
   boids[index].angle = angle;
 
-  float speed = 2.0f;
+  float speed = 2.0;
   boids[index].velocity.x = cos(angle) * speed;
   boids[index].velocity.y = sin(angle) * speed;
 }
@@ -66,7 +67,8 @@ void detect_other_boids(boid &b) {
                                  boids[i].position.y};
 
     bool detected =
-        CheckCollisionSpheres(boid_pos_3D, 5.0f, other_boid_pos_3D, 0.5f);
+        CheckCollisionSpheres(boid_pos_3D, b.detection_area, other_boid_pos_3D,
+                              boids[i].detection_area);
 
     if (&boids[i] != &b && detected) {
       neighbours.push_back(boids[i]);
@@ -74,7 +76,7 @@ void detect_other_boids(boid &b) {
   }
   if (neighbours.size() != 0) {
     alignment(neighbours, b);
-    // cohesion(neighbours, b);
+    cohesion(neighbours, b);
     // separation(neighbours, b);
   }
 }
