@@ -45,14 +45,7 @@ void move_boid(int index) {
   boids[index].velocity.x += boids[index].steering.x;
   boids[index].velocity.y += boids[index].steering.y;
 
-  float magnitude = sqrt(boids[index].velocity.x * boids[index].velocity.x +
-                         boids[index].velocity.y * boids[index].velocity.y);
-
-  if (magnitude > MAX_SPEED) {
-    float scale = MAX_SPEED / magnitude;
-    boids[index].velocity.x *= scale;
-    boids[index].velocity.y *= scale;
-  }
+  vector_normalisation(index, MAX_SPEED);
 
   boids[index].position.x += boids[index].velocity.x;
   boids[index].position.y += boids[index].velocity.y;
@@ -61,7 +54,23 @@ void move_boid(int index) {
   boids[index].steering.y = 0;
 }
 
-void detect_other_boids(boid &b) {
+void alignment(std::vector<boid> &vec, boid &b) {
+
+  Vector2 desired_velocity = average(vec);
+
+  b.steering.x = desired_velocity.x - b.velocity.x;
+  b.steering.y = desired_velocity.y - b.velocity.y;
+}
+
+void cohesion(std::vector<boid> &vec, boid &b) {
+
+  Vector2 avg_pos = average(vec);
+
+  b.steering.x = avg_pos.x - b.position.x;
+  b.steering.y = avg_pos.y - b.position.y;
+}
+
+void separation(std::vector<boid> &vec, boid &b) {
   std::vector<boid> neighbours;
 
   int amount_of_boids = boids.size();
@@ -82,30 +91,7 @@ void detect_other_boids(boid &b) {
       neighbours.push_back(boids[i]);
     }
   }
-  if (neighbours.size() != 0) {
-    alignment(neighbours, b);
-    cohesion(neighbours, b);
-    // separation(neighbours, b);
-  }
 }
-
-void alignment(std::vector<boid> &vec, boid &b) {
-
-  Vector2 desired_velocity = average(vec);
-
-  b.steering.x = desired_velocity.x - b.velocity.x;
-  b.steering.y = desired_velocity.y - b.velocity.y;
-}
-
-void cohesion(std::vector<boid> &vec, boid &b) {
-
-  Vector2 avg_pos = average(vec);
-
-  b.steering.x = avg_pos.x - b.position.x;
-  b.steering.y = avg_pos.y - b.position.y;
-}
-
-void separation(std::vector<boid> &vec, boid &b) {}
 
 void wrap_boid(boid &b, float width, float height) {
   if (b.position.x > width)
