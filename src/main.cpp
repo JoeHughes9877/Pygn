@@ -6,8 +6,11 @@
 
 std::vector<boid> boids;
 
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 450;
+
 int main(void) {
-  InitWindow(800, 450, "Boids simulation");
+  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Boids simulation");
   SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
@@ -26,7 +29,7 @@ int main(void) {
       render_boid(boids[i].position);
       move_boid(i);
       detect_other_boids(boids[i]);
-      wrap_boid(boids[i], 800, 450);
+      wrap_boid(boids[i], SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
     EndDrawing();
