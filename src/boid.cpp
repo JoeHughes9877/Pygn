@@ -16,10 +16,9 @@ void create_boid(Vector2 pos) {
   b.velocity = {0, 0};
   b.angle = 0;
   b.detection_area = 5.0f;
-  b.steering_x = 0;
-  b.steering_y = 0;
-
-  boids.push_back(b);
+  b.steering.x = 0;
+  b.steering.y;
+  = 0 boids.push_back(b);
   int arr_len = boids.size();
 
   init_movement(arr_len - 1);
@@ -43,14 +42,14 @@ void init_movement(int index) {
 }
 
 void move_boid(int index) {
-  boids[index].velocity.x += boids[index].steering_x;
-  boids[index].velocity.y += boids[index].steering_y;
+  boids[index].velocity.x += boids[index].steering.x;
+  boids[index].velocity.y += boids[index].steering.y;
 
   boids[index].position.x += boids[index].velocity.x;
   boids[index].position.y += boids[index].velocity.y;
 
-  boids[index].steering_x = 0;
-  boids[index].steering_y = 0;
+  boids[index].steering.x = 0;
+  boids[index].steering.y = 0;
 }
 
 void detect_other_boids(boid &b) {
@@ -85,16 +84,16 @@ void alignment(std::vector<boid> &vec, boid &b) {
 
   Vector2 desired_velocity = average(vec);
 
-  b.steering_x = desired_velocity.x - b.velocity.x;
-  b.steering_y = desired_velocity.y - b.velocity.y;
+  b.steering.x = desired_velocity.x - b.velocity.x;
+  b.steering.y = desired_velocity.y - b.velocity.y;
 }
 
 void cohesion(std::vector<boid> &vec, boid &b) {
 
   Vector2 avg_pos = average(vec);
 
-  b.steering_x = avg_pos.x - b.position.x;
-  b.steering_y = avg_pos.y - b.position.y;
+  b.steering.x = avg_pos.x - b.position.x;
+  b.steering.y = avg_pos.y - b.position.y;
 }
 
 void separation(std::vector<boid> &vec, boid &b) {}
