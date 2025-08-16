@@ -15,7 +15,7 @@ void create_boid(Vector2 pos) {
   b.position = pos;
   b.velocity = {0, 0};
   b.angle = 0;
-  b.detection_area = 5.0f;
+  b.detection_area = 2.0f;
   b.steering.x = 0;
   b.steering.y = 0;
   boids.push_back(b);
@@ -90,6 +90,12 @@ void separation(std::vector<boid> &vec, boid &b) {
     if (&boids[i] != &b && detected) {
       neighbours.push_back(boids[i]);
     }
+  }
+
+  int amount_of_neighbours = neighbours.size();
+  for (int i = 0; i < amount_of_neighbours; i++) {
+    b.steering.x = b.position.x - neighbours[i].position.x;
+    b.steering.y = b.position.y - neighbours[i].position.y;
   }
 }
 
