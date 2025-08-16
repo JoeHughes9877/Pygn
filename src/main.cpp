@@ -28,7 +28,9 @@ int main(void) {
     for (int i = 0; i < amount_of_boids; i++) {
       render_boid(boids[i].position);
       move_boid(i);
-      detect_other_boids(boids[i]);
+      alignment(boids, boids[i]);
+      cohesion(boids, boids[i]);
+      // separation(neighbours, b);
       wrap_boid(boids[i], SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
