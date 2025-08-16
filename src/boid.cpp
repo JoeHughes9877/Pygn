@@ -1,4 +1,5 @@
 #include "../include/boid.h"
+#include "../include/utils.h"
 #include "raylib.h"
 #include <cmath>
 #include <cstdlib>
@@ -79,22 +80,16 @@ void detect_other_boids(boid &b) {
 }
 
 void alignment(std::vector<boid> &vec, boid &b) {
-  int arr_len = vec.size();
-  float total_value_x = 0;
-  float total_value_y = 0;
 
-  for (int i = 0; i < arr_len; i++) {
-    total_value_x += vec[i].velocity.x;
-    total_value_y += vec[i].velocity.y;
-  }
+  Vector2 desired_velocity = average(vec);
 
-  float desired_velocity_x = total_value_x / arr_len;
-  float desired_velocity_y = total_value_y / arr_len;
-
-  b.steering_x = desired_velocity_x - b.velocity.x;
-  b.steering_y = desired_velocity_y - b.velocity.y;
+  b.steering_x = desired_velocity.x - b.velocity.x;
+  b.steering_y = desired_velocity.y - b.velocity.y;
 }
 
-void cohesion(std::vector<boid> &vec, boid b) { return; }
+void cohesion(std::vector<boid> &vec, boid b) {
+
+  Vector2 avg_pos = average(vec);
+}
 
 void separation(std::vector<boid> &vec, boid b) { return; }
