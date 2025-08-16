@@ -107,14 +107,3 @@ void separation(std::vector<boid> &vec, boid &b) {
     };
   }
 }
-
-void wrap_boid(boid &b, float width, float height) {
-  if (b.position.x > width)
-    b.position.x = 0;
-  if (b.position.x < 0)
-    b.position.x = width;
-  if (b.position.y > height)
-    b.position.y = 0;
-  if (b.position.y < 0)
-    b.position.y = height;
-}
