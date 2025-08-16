@@ -6,7 +6,7 @@
 #include <vector>
 
 float size = 10;
-const float SPEED = 2.0;
+const float MAX_SPEED = 2.5;
 
 void init_movement(int index);
 
@@ -17,8 +17,8 @@ void create_boid(Vector2 pos) {
   b.angle = 0;
   b.detection_area = 5.0f;
   b.steering.x = 0;
-  b.steering.y;
-  = 0 boids.push_back(b);
+  b.steering.y = 0;
+  boids.push_back(b);
   int arr_len = boids.size();
 
   init_movement(arr_len - 1);
@@ -44,6 +44,15 @@ void init_movement(int index) {
 void move_boid(int index) {
   boids[index].velocity.x += boids[index].steering.x;
   boids[index].velocity.y += boids[index].steering.y;
+
+  float magnitude = sqrt(boids[index].velocity.x * boids[index].velocity.x +
+                         boids[index].velocity.y * boids[index].velocity.y);
+
+  if (magnitude > MAX_SPEED) {
+    float scale = MAX_SPEED / magnitude;
+    boids[index].velocity.x *= scale;
+    boids[index].velocity.y *= scale;
+  }
 
   boids[index].position.x += boids[index].velocity.x;
   boids[index].position.y += boids[index].velocity.y;
