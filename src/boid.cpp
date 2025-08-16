@@ -14,7 +14,7 @@ void create_boid(Vector2 pos) {
   b.position = pos;
   b.velocity = {0, 0};
   b.angle = 0;
-  b.detection_area = 100.0;
+  b.detection_area = 10000.0;
   b.steering_x = 0;
   b.steering_y = 0;
 
@@ -87,9 +87,12 @@ void alignment(std::vector<boid> &vec, boid &b) {
   b.steering_y = desired_velocity.y - b.velocity.y;
 }
 
-void cohesion(std::vector<boid> &vec, boid b) {
+void cohesion(std::vector<boid> &vec, boid &b) {
 
   Vector2 avg_pos = average(vec);
+
+  b.steering_x = avg_pos.x - b.position.x;
+  b.steering_y = avg_pos.y - b.position.y;
 }
 
-void separation(std::vector<boid> &vec, boid b) { return; }
+void separation(std::vector<boid> &vec, boid &b) { return; }
