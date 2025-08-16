@@ -26,6 +26,7 @@ int main(void) {
       render_boid(boids[i].position);
       move_boid(i);
       detect_other_boids(boids[i]);
+      wrap_boid(boids[i], 800, 450);
     }
 
     EndDrawing();
