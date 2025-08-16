@@ -23,5 +23,6 @@ void detect_other_boids(boid &b);
 void alignment(std::vector<boid> &vec, boid &b);
 void cohesion(std::vector<boid> &vec, boid &b);
 void separation(std::vector<boid> &vec, boid &b);
+void wrap_boid(boid &b, float width, float height);
 
 #endif
