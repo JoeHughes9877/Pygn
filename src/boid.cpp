@@ -7,6 +7,7 @@
 
 float size = 10;
 const float MAX_SPEED = 2.5;
+const float MAX_STEERING = 2.5;
 
 void init_movement(int index);
 
@@ -15,7 +16,7 @@ void create_boid(Vector2 pos) {
   b.position = pos;
   b.velocity = {0, 0};
   b.angle = 0;
-  b.detection_area = 2.0f;
+  b.detection_area = 0.1f;
   b.steering.x = 0;
   b.steering.y = 0;
   boids.push_back(b);
@@ -60,6 +61,14 @@ void alignment(std::vector<boid> &vec, boid &b) {
 
   b.steering.x = desired_velocity.x - b.velocity.x;
   b.steering.y = desired_velocity.y - b.velocity.y;
+
+  float magnitude =
+      sqrt(b.steering.x * b.steering.x + b.steering.y * b.steering.y);
+
+  if (magnitude > MAX_STEERING) {
+    b.steering.x = b.steering.x * (MAX_STEERING / magnitude);
+    b.steering.y = b.steering.y * (MAX_STEERING / magnitude);
+  }
 }
 
 void cohesion(std::vector<boid> &vec, boid &b) {
