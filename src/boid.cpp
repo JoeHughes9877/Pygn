@@ -71,9 +71,7 @@ void cohesion(std::vector<boid> &vec, boid &b) {
 }
 
 void separation(std::vector<boid> &vec, boid &b) {
-  std::vector<boid> neighbours;
-
-  int amount_of_boids = boids.size();
+  int amount_of_boids = vec.size();
 
   // converting 2D to 3D as CheckCollisionSpheres is 3D exclusive (y is 0.0f as
   // its still "2D")
@@ -88,14 +86,16 @@ void separation(std::vector<boid> &vec, boid &b) {
                               boids[i].detection_area);
 
     if (&boids[i] != &b && detected) {
-      neighbours.push_back(boids[i]);
-    }
-  }
+      float dx = b.position.x - vec[i].position.x;
+      float dy = b.position.y - vec[i].position.y;
 
-  int amount_of_neighbours = neighbours.size();
-  for (int i = 0; i < amount_of_neighbours; i++) {
-    b.steering.x = b.position.x - neighbours[i].position.x;
-    b.steering.y = b.position.y - neighbours[i].position.y;
+      float distance = std::sqrt(dx * dx + dy * dy);
+
+      float strength = 1.0f - distance;
+
+      b.steering.x += dx / distance * strength;
+      b.steering.y += dy / distance * strength;
+    };
   }
 }
 
