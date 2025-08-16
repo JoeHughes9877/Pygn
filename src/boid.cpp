@@ -13,7 +13,9 @@ void create_boid(Vector2 pos) {
   b.position = pos;
   b.velocity = {0, 0};
   b.angle = 0;
-  b.detection_area = 5.0;
+  b.detection_area = 100.0;
+  b.steering_x = 0;
+  b.steering_y = 0;
 
   boids.push_back(b);
   int arr_len = boids.size();
@@ -39,8 +41,14 @@ void init_movement(int index) {
 }
 
 void move_boid(int index) {
+  boids[index].velocity.x += boids[index].steering_x;
+  boids[index].velocity.y += boids[index].steering_y;
+
   boids[index].position.x += boids[index].velocity.x;
   boids[index].position.y += boids[index].velocity.y;
+
+  boids[index].steering_x = 0;
+  boids[index].steering_y = 0;
 }
 
 void detect_other_boids(boid &b) {
@@ -59,7 +67,7 @@ void detect_other_boids(boid &b) {
     bool detected =
         CheckCollisionSpheres(boid_pos_3D, 5.0f, other_boid_pos_3D, 0.5f);
 
-    if (detected) {
+    if (&boids[i] != &b && detected) {
       neighbours.push_back(boids[i]);
     }
   }
@@ -80,8 +88,11 @@ void alignment(std::vector<boid> &vec, boid &b) {
     total_value_y += vec[i].velocity.y;
   }
 
-  b.velocity.x = total_value_x / arr_len;
-  b.velocity.y = total_value_y / arr_len;
+  float desired_velocity_x = total_value_x / arr_len;
+  float desired_velocity_y = total_value_y / arr_len;
+
+  b.steering_x = desired_velocity_x - b.velocity.x;
+  b.steering_y = desired_velocity_y - b.velocity.y;
 }
 
 void cohesion(std::vector<boid> &vec, boid b) { return; }
