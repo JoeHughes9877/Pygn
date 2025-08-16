@@ -31,7 +31,7 @@ int main(void) {
       alignment(boids, boids[i]);
       cohesion(boids, boids[i]);
       separation(boids, boids[i]);
-      wrap_boid(boids[i], SCREEN_WIDTH, SCREEN_HEIGHT);
+      // wrap_boid(boids[i], SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
     EndDrawing();
