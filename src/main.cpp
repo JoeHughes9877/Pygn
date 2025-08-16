@@ -30,7 +30,7 @@ int main(void) {
       move_boid(i);
       alignment(boids, boids[i]);
       cohesion(boids, boids[i]);
-      // separation(neighbours, b);
+      separation(boids, boids[i]);
       wrap_boid(boids[i], SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
