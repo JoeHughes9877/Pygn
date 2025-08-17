@@ -18,8 +18,8 @@ void create_boid(Vector2 pos);
 void move_boid(int index);
 void render_boid(Vector2 pos);
 
-void alignment(std::vector<boid> &vec, boid &b);
-void cohesion(std::vector<boid> &vec, boid &b);
-void separation(std::vector<boid> &vec, boid &b);
+Vector2 alignment(std::vector<boid> &vec, boid &b);
+Vector2 cohesion(std::vector<boid> &vec, boid &b);
+Vector2 separation(std::vector<boid> &vec, boid &b);
 
 #endif
