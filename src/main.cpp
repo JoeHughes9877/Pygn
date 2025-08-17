@@ -26,11 +26,26 @@ int main(void) {
 
     int amount_of_boids = boids.size();
     for (int i = 0; i < amount_of_boids; i++) {
+      boids[i].steering = {0, 0};
+
+      Vector2 alignment_force = alignment(boids, boids[i]);
+      Vector2 cohesion_force = cohesion(boids, boids[i]);
+      Vector2 separation_force = separation(boids, boids[i]);
+
+      // Apply forces with weights
+      float separation_weight = 1.5f;
+      float alignment_weight = 1.0f;
+      float cohesion_weight = 0.8f;
+
+      boids[i].steering.x += (separation_force.x * separation_weight) +
+                             (alignment_force.x * alignment_weight) +
+                             (cohesion_force.x * cohesion_weight);
+      boids[i].steering.y += (separation_force.y * separation_weight) +
+                             (alignment_force.y * alignment_weight) +
+                             (cohesion_force.y * cohesion_weight);
+
       render_boid(boids[i].position);
       move_boid(i);
-      alignment(boids, boids[i]);
-      cohesion(boids, boids[i]);
-      separation(boids, boids[i]);
     }
 
     EndDrawing();

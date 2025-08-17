@@ -55,32 +55,36 @@ void move_boid(int index) {
   boids[index].steering.y = 0;
 }
 
-void alignment(std::vector<boid> &vec, boid &b) {
+Vector2 alignment(std::vector<boid> &vec, boid &b) {
 
   Vector2 desired_velocity = average(vec);
+  Vector2 steering = {0, 0};
 
-  b.steering.x = desired_velocity.x - b.velocity.x;
-  b.steering.y = desired_velocity.y - b.velocity.y;
+  steering.x += desired_velocity.x - b.velocity.x;
+  steering.y += desired_velocity.y - b.velocity.y;
 
-  float magnitude =
-      sqrt(b.steering.x * b.steering.x + b.steering.y * b.steering.y);
+  float magnitude = sqrt(steering.x * steering.x + steering.y * steering.y);
 
   if (magnitude > MAX_STEERING) {
-    b.steering.x = b.steering.x * (MAX_STEERING / magnitude);
-    b.steering.y = b.steering.y * (MAX_STEERING / magnitude);
+    steering.x = steering.x * (MAX_STEERING / magnitude);
+    steering.y = steering.y * (MAX_STEERING / magnitude);
   }
+  return steering;
 }
 
-void cohesion(std::vector<boid> &vec, boid &b) {
-
+Vector2 cohesion(std::vector<boid> &vec, boid &b) {
   Vector2 avg_pos = average(vec);
+  Vector2 steering = {0, 0};
 
-  b.steering.x = avg_pos.x - b.position.x;
-  b.steering.y = avg_pos.y - b.position.y;
+  steering.x += avg_pos.x - b.position.x;
+  steering.y += avg_pos.y - b.position.y;
+
+  return steering;
 }
 
-void separation(std::vector<boid> &vec, boid &b) {
+Vector2 separation(std::vector<boid> &vec, boid &b) {
   int amount_of_boids = vec.size();
+  Vector2 steering = {0, 0};
 
   // converting 2D to 3D as CheckCollisionSpheres is 3D exclusive (y is 0.0f as
   // its still "2D")
@@ -102,8 +106,9 @@ void separation(std::vector<boid> &vec, boid &b) {
 
       float strength = 1.0f - distance;
 
-      b.steering.x += dx / distance * strength;
-      b.steering.y += dy / distance * strength;
+      steering.x += dx / distance * strength;
+      steering.y += dy / distance * strength;
     };
   }
+  return steering;
 }
