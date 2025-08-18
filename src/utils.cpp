@@ -4,6 +4,9 @@
 
 Vector2 average_velocity(std::vector<boid> &vec) {
   int arr_len = vec.size();
+  if (arr_len == 0) {
+    return {0, 0};
+  }
   Vector2 total_value = {0, 0};
 
   for (int i = 0; i < arr_len; i++) {
@@ -16,6 +19,9 @@ Vector2 average_velocity(std::vector<boid> &vec) {
 
 Vector2 average_position(std::vector<boid> &vec) {
   int arr_len = vec.size();
+  if (arr_len == 0) {
+    return {0, 0};
+  }
   Vector2 total_value = {0, 0};
 
   for (int i = 0; i < arr_len; i++) {
