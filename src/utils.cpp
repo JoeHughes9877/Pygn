@@ -43,7 +43,8 @@ void normalise_velocity(int index, const int MAX_SPEED) {
   }
 }
 
-std::vector<boid> find_neighbours(std::vector<boid> &vec, boid b) {
+std::vector<boid> find_neighbours(std::vector<boid> &vec, boid b,
+                                  float detect) {
   std::vector<boid> neighbours;
   int amount_of_boids = boids.size();
 
@@ -52,7 +53,7 @@ std::vector<boid> find_neighbours(std::vector<boid> &vec, boid b) {
     float dy = b.position.y - vec[i].position.y;
     float distance = std::sqrt(dx * dx + dy * dy);
 
-    if (&vec[i] != &b && distance < b.detection_area && distance > 0.0f) {
+    if (&vec[i] != &b && distance < detect && distance > 0.0f) {
       neighbours.push_back(vec[i]);
     }
   }
