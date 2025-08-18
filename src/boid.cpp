@@ -30,7 +30,7 @@ void render_boid(boid b) {
   Vector2 v2 = {b.position.x - size, b.position.y + size};
   Vector2 v3 = {b.position.x + size, b.position.y + size};
 
-  DrawTriangle(v1, v2, v3, BLACK);
+  DrawTriangle(v1, v2, v3, WHITE);
 }
 
 void init_movement(int index) {
