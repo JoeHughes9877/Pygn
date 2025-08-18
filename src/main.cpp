@@ -33,7 +33,7 @@ int main(void) {
       Vector2 separation_force = separation(boids, boids[i]);
 
       // Apply forces with weights
-      float separation_weight = 1.5f;
+      float separation_weight = 3.5f;
       float alignment_weight = 1.0f;
       float cohesion_weight = 0.8f;
 
