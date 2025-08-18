@@ -16,7 +16,7 @@ void create_boid(Vector2 pos) {
   b.position = pos;
   b.velocity = {0, 0};
   b.angle = 0;
-  b.detection_area = 100.0f;
+  b.detection_area = 66.0f;
   b.steering.x = 0;
   b.steering.y = 0;
 
@@ -47,7 +47,7 @@ void move_boid(int index) {
   boids[index].velocity.x += boids[index].steering.x;
   boids[index].velocity.y += boids[index].steering.y;
 
-  vector_normalisation(index, MAX_SPEED);
+  normalise_velocity(index, MAX_SPEED);
 
   boids[index].position.x += boids[index].velocity.x;
   boids[index].position.y += boids[index].velocity.y;
