@@ -1,6 +1,8 @@
 # Pygn
 
-Pygn is my C++ implementation of the Boids algorithm using OpenGL.  
+Basic behaviour can be seen, although is still needs improvement.
+
+Pygn is my C++ implementation of the Boids algorithm using Raylib.  
 It’s a simple, visual way to explore how groups of Pigons "boids" move and interact.
 
 ## Motivation
