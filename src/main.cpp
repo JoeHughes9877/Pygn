@@ -33,9 +33,9 @@ int main(void) {
       Vector2 separation_force = separation(boids, boids[i]);
 
       // Apply forces with weights
-      float separation_weight = 3.5f;
+      float separation_weight = 3.f;
       float alignment_weight = 1.0f;
-      float cohesion_weight = 0.8f;
+      float cohesion_weight = 1.0f;
 
       boids[i].steering.x += (separation_force.x * separation_weight) +
                              (alignment_force.x * alignment_weight) +
@@ -44,6 +44,7 @@ int main(void) {
                              (alignment_force.y * alignment_weight) +
                              (cohesion_force.y * cohesion_weight);
 
+      wrap_boid(boids[i], SCREEN_WIDTH, SCREEN_HEIGHT);
       render_boid(boids[i].position);
       move_boid(i);
     }
