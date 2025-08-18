@@ -16,7 +16,7 @@ void create_boid(Vector2 pos) {
   b.position = pos;
   b.velocity = {0, 0};
   b.angle = 0;
-  b.detection_area = 0.1f;
+  b.detection_area = 25.0f;
   b.steering.x = 0;
   b.steering.y = 0;
   boids.push_back(b);
@@ -56,7 +56,6 @@ void move_boid(int index) {
 }
 
 Vector2 alignment(std::vector<boid> &vec, boid &b) {
-
   Vector2 desired_velocity = average(vec);
   Vector2 steering = {0, 0};
 
@@ -79,25 +78,45 @@ Vector2 cohesion(std::vector<boid> &vec, boid &b) {
   steering.x += avg_pos.x - b.position.x;
   steering.y += avg_pos.y - b.position.y;
 
+  float magnitude = sqrt(steering.x * steering.x + steering.y * steering.y);
+
+  // normalisation
+  if (magnitude > 0) {
+    steering.x = steering.x * (MAX_STEERING / magnitude);
+    steering.y = steering.y * (MAX_STEERING / magnitude);
+  }
+
   return steering;
 }
 
 Vector2 separation(std::vector<boid> &vec, boid &b) {
   int amount_of_boids = boids.size();
   Vector2 steering = {0, 0};
+  int nearby_boids = 0;
 
   for (int i = 0; i < amount_of_boids; i++) {
     float dx = b.position.x - vec[i].position.x;
     float dy = b.position.y - vec[i].position.y;
-
     float distance = std::sqrt(dx * dx + dy * dy);
 
-    if (&boids[i] != &b && distance < b.detection_area) {
-      float strength = 1.0f / distance;
+    if (&boids[i] != &b && distance < b.detection_area && distance > 0.0f) {
+      nearby_boids++;
 
-      steering.x += dx / distance * strength;
-      steering.y += dy / distance * strength;
+      steering.x += dx / distance;
+      steering.y += dy / distance;
     }
+  }
+  // averageing result
+  if (nearby_boids > 0) {
+    steering.x /= nearby_boids;
+    steering.y /= nearby_boids;
+  }
+
+  float magnitude = sqrt(steering.x * steering.x + steering.y * steering.y);
+
+  if (magnitude > MAX_STEERING) {
+    steering.x = steering.x * (MAX_STEERING / magnitude);
+    steering.y = steering.y * (MAX_STEERING / magnitude);
   }
   return steering;
 }
