@@ -6,7 +6,7 @@
 #include <vector>
 
 float size = 10;
-const float MAX_SPEED = 2.5;
+const float MAX_SPEED = 10;
 const float MAX_STEERING = 2.5;
 
 void init_movement(int index);
@@ -37,7 +37,7 @@ void init_movement(int index) {
   float angle = static_cast<float>(rand()) / RAND_MAX * 2 * 3.1415926f;
   boids[index].angle = angle;
 
-  float speed = 2.0;
+  float speed = 0.0;
   boids[index].velocity.x = cos(angle) * speed;
   boids[index].velocity.y = sin(angle) * speed;
 }
@@ -51,12 +51,13 @@ void move_boid(int index) {
   boids[index].position.x += boids[index].velocity.x;
   boids[index].position.y += boids[index].velocity.y;
 
-  boids[index].steering.x = 0;
-  boids[index].steering.y = 0;
+  boids[index].steering = {0, 0};
 }
 
 Vector2 alignment(std::vector<boid> &vec, boid &b) {
-  Vector2 desired_velocity = average(vec);
+  std::vector<boid> neighbours = find_neighbours(vec, b);
+
+  Vector2 desired_velocity = average_velocity(neighbours);
   Vector2 steering = {0, 0};
 
   steering.x += desired_velocity.x - b.velocity.x;
@@ -72,7 +73,9 @@ Vector2 alignment(std::vector<boid> &vec, boid &b) {
 }
 
 Vector2 cohesion(std::vector<boid> &vec, boid &b) {
-  Vector2 avg_pos = average(vec);
+  std::vector<boid> neighbours = find_neighbours(vec, b);
+
+  Vector2 avg_pos = average_position(neighbours);
   Vector2 steering = {0, 0};
 
   steering.x += avg_pos.x - b.position.x;
@@ -119,4 +122,15 @@ Vector2 separation(std::vector<boid> &vec, boid &b) {
     steering.y = steering.y * (MAX_STEERING / magnitude);
   }
   return steering;
+}
+
+void wrap_boid(boid &b, float width, float height) {
+  if (b.position.x > width)
+    b.position.x = 0;
+  if (b.position.x < 0)
+    b.position.x = width;
+  if (b.position.y > height)
+    b.position.y = 0;
+  if (b.position.y < 0)
+    b.position.y = height;
 }
