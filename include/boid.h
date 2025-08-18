@@ -16,7 +16,7 @@ extern std::vector<boid> boids;
 
 void create_boid(Vector2 pos);
 void move_boid(int index);
-void render_boid(Vector2 pos);
+void render_boid(boid b);
 
 Vector2 alignment(std::vector<boid> &vec, boid &b);
 Vector2 cohesion(std::vector<boid> &vec, boid &b);
