@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <vector>
 
-float size = 10;
 const float MAX_SPEED = 3.5f;
 const float MAX_STEERING = 0.10f;
 
@@ -26,9 +25,27 @@ void create_boid(Vector2 pos) {
 }
 
 void render_boid(boid b) {
-  Vector2 v1 = {b.position.x, b.position.y - size};
-  Vector2 v2 = {b.position.x - size, b.position.y + size};
-  Vector2 v3 = {b.position.x + size, b.position.y + size};
+  double angle = atan2(b.velocity.y, b.velocity.x);
+  float size = 10;
+
+  Vector2 pos1 = {size, 0};
+  Vector2 pos2 = {-size, -size / 2};
+  Vector2 pos3 = {-size, size / 2};
+
+  Vector2 v1 = {static_cast<float>(b.position.x + pos1.x * cos(angle) -
+                                   pos1.y * sin(angle)),
+                static_cast<float>(b.position.y + pos1.x * sin(angle) +
+                                   pos1.y * cos(angle))};
+
+  Vector2 v2 = {static_cast<float>(b.position.x + pos2.x * cos(angle) -
+                                   pos2.y * sin(angle)),
+                static_cast<float>(b.position.y + pos2.x * sin(angle) +
+                                   pos2.y * cos(angle))};
+
+  Vector2 v3 = {static_cast<float>(b.position.x + pos3.x * cos(angle) -
+                                   pos3.y * sin(angle)),
+                static_cast<float>(b.position.y + pos3.x * sin(angle) +
+                                   pos3.y * cos(angle))};
 
   DrawTriangle(v1, v2, v3, WHITE);
 }
@@ -53,7 +70,6 @@ void move_boid(int index) {
   boids[index].position.y += boids[index].velocity.y;
 }
 
-// alignment with medium radius (~60)
 Vector2 alignment(std::vector<boid> &vec, boid &b) {
   std::vector<boid> neighbours = find_neighbours(vec, b, 60.0f);
   if (neighbours.empty())
