@@ -9,6 +9,10 @@ const float MAX_SPEED = 3.5f;
 const float MAX_STEERING = 0.10f;
 const float DETECTION_AREA = 70.0f;
 
+const float ALIGNMENT_RADIUS = 60.0f;
+const float COHESION_RADIUS = 80.0f;
+const float SEPARATION_RADIUS = 25.0f;
+
 void init_movement(int index);
 
 void create_boid(Vector2 pos) {
@@ -73,7 +77,7 @@ void move_boid(boid *b) {
 }
 
 Vector2 alignment(std::vector<boid> &vec, const boid &b) {
-  std::vector<boid> neighbours = find_neighbours(vec, b, 60.0f);
+  std::vector<boid> neighbours = find_neighbours(vec, b, ALIGNMENT_RADIUS);
   if (neighbours.empty())
     return {0, 0};
 
@@ -95,7 +99,7 @@ Vector2 alignment(std::vector<boid> &vec, const boid &b) {
 }
 
 Vector2 cohesion(std::vector<boid> &vec, const boid &b) {
-  std::vector<boid> neighbours = find_neighbours(vec, b, 80.0f);
+  std::vector<boid> neighbours = find_neighbours(vec, b, COHESION_RADIUS);
   if (neighbours.empty())
     return {0, 0};
 
@@ -115,7 +119,7 @@ Vector2 cohesion(std::vector<boid> &vec, const boid &b) {
 }
 
 Vector2 separation(std::vector<boid> &vec, const boid &b) {
-  std::vector<boid> neighbours = find_neighbours(vec, b, 25.0f);
+  std::vector<boid> neighbours = find_neighbours(vec, b, SEPARATION_RADIUS);
   if (neighbours.empty())
     return {0, 0};
 
