@@ -60,14 +60,15 @@ void init_movement(int index) {
   boids[index].velocity.y = sin(angle) * speed;
 }
 
-void move_boid(int index) {
-  boids[index].velocity.x += boids[index].steering.x;
-  boids[index].velocity.y += boids[index].steering.y;
+void move_boid(boid *b) {
 
-  normalise_velocity(index, MAX_SPEED);
+  b->velocity.x += b->steering.x;
+  b->velocity.y += b->steering.y;
 
-  boids[index].position.x += boids[index].velocity.x;
-  boids[index].position.y += boids[index].velocity.y;
+  normalise_velocity(b, MAX_SPEED);
+
+  b->position.x += b->velocity.x;
+  b->position.y += b->velocity.y;
 }
 
 Vector2 alignment(std::vector<boid> &vec, boid &b) {
