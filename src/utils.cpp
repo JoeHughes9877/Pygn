@@ -56,7 +56,7 @@ std::vector<boid> find_neighbours(std::vector<boid> &vec, boid &b,
   return neighbours;
 }
 
-Vector2 limitSteering(Vector2 steering, const float MAX_STEERING) {
+Vector2 limit_steering(Vector2 steering, const float MAX_STEERING) {
   float magnitude = sqrtf(steering.x * steering.x + steering.y * steering.y);
   if (magnitude > MAX_STEERING) {
     steering.x *= (MAX_STEERING / magnitude);
