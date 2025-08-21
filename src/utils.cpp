@@ -1,32 +1,26 @@
 #include "../include/boid.h"
 #include <cmath>
+#include <stdexcept>
 #include <vector>
 
-Vector2 average_velocity(std::vector<boid> &vec) {
+Vector2 average(std::vector<boid> &vec, bool use_velocity, bool use_position) {
   int arr_len = vec.size();
   if (arr_len == 0) {
     return {0, 0};
   }
   Vector2 total_value = {0, 0};
 
-  for (int i = 0; i < arr_len; i++) {
-    total_value.x += vec[i].velocity.x;
-    total_value.y += vec[i].velocity.y;
-  }
-
-  return {total_value.x / arr_len, total_value.y / arr_len};
-}
-
-Vector2 average_position(std::vector<boid> &vec) {
-  int arr_len = vec.size();
-  if (arr_len == 0) {
-    return {0, 0};
-  }
-  Vector2 total_value = {0, 0};
-
-  for (int i = 0; i < arr_len; i++) {
-    total_value.x += vec[i].position.x;
-    total_value.y += vec[i].position.y;
+  for (auto b : vec) {
+    if (use_velocity) {
+      total_value.x += b.velocity.x;
+      total_value.y += b.velocity.y;
+    } else if (use_position) {
+      total_value.x += b.position.x;
+      total_value.y += b.position.y;
+    } else {
+      throw std::logic_error(
+          "Either use_velocity or use_position must be true.");
+    }
   }
 
   return {total_value.x / arr_len, total_value.y / arr_len};
@@ -43,19 +37,21 @@ void normalise_velocity(boid *b, const int MAX_SPEED) {
   }
 }
 
-std::vector<boid> find_neighbours(std::vector<boid> &vec, boid b,
+std::vector<boid> find_neighbours(std::vector<boid> &vec, boid &b,
                                   float detect) {
   std::vector<boid> neighbours;
-  int amount_of_boids = boids.size();
+  for (auto &other : vec) {
+    if (&other == &b)
+      continue;
 
-  for (int i = 0; i < amount_of_boids; i++) {
-    float dx = b.position.x - vec[i].position.x;
-    float dy = b.position.y - vec[i].position.y;
+    float dx = other.position.x - b.position.x;
+    float dy = other.position.y - b.position.y;
     float distance = std::sqrt(dx * dx + dy * dy);
 
-    if (&vec[i] != &b && distance < detect && distance > 0.0f) {
-      neighbours.push_back(vec[i]);
+    if (distance < detect && distance > 0.0f) {
+      neighbours.push_back(other);
     }
   }
+
   return neighbours;
 }
