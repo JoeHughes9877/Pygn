@@ -76,7 +76,7 @@ Vector2 alignment(std::vector<boid> &vec, boid &b) {
   if (neighbours.empty())
     return {0, 0};
 
-  Vector2 desired_velocity = average_velocity(neighbours);
+  Vector2 desired_velocity = average(neighbours, true, false);
 
   float mag = sqrtf(desired_velocity.x * desired_velocity.x +
                     desired_velocity.y * desired_velocity.y);
@@ -101,7 +101,7 @@ Vector2 cohesion(std::vector<boid> &vec, boid &b) {
   if (neighbours.empty())
     return {0, 0};
 
-  Vector2 avg_pos = average_position(neighbours);
+  Vector2 avg_pos = average(neighbours, false, true);
   Vector2 desired = {avg_pos.x - b.position.x, avg_pos.y - b.position.y};
 
   float mag = sqrtf(desired.x * desired.x + desired.y * desired.y);
