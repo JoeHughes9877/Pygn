@@ -1,8 +1,8 @@
 #ifndef BOID_H
 #define BOID_H
 
-#include "../include/main.h"
 #include "raylib.h"
+#include <vector>
 
 struct boid {
   Vector2 position;
