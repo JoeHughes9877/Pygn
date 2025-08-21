@@ -7,6 +7,7 @@
 
 const float MAX_SPEED = 3.5f;
 const float MAX_STEERING = 0.10f;
+const float DETECTION_AREA = 70.0f;
 
 void init_movement(int index);
 
@@ -15,7 +16,7 @@ void create_boid(Vector2 pos) {
   b.position = pos;
   b.velocity = {0, 0};
   b.angle = 0;
-  b.detection_area = 70.0f;
+  b.detection_area = DETECTION_AREA;
   b.steering = {0, 0};
 
   boids.push_back(b);
@@ -51,7 +52,7 @@ void render_boid(boid b) {
 }
 
 void init_movement(int index) {
-  float angle = static_cast<float>(rand()) / RAND_MAX * 2 * 3.1415926f;
+  float angle = static_cast<float>(rand()) / RAND_MAX * 2 * PI;
   boids[index].angle = angle;
 
   float speed =
@@ -88,11 +89,8 @@ Vector2 alignment(std::vector<boid> &vec, boid &b) {
   Vector2 steering = {desired_velocity.x - b.velocity.x,
                       desired_velocity.y - b.velocity.y};
 
-  float magnitude = sqrtf(steering.x * steering.x + steering.y * steering.y);
-  if (magnitude > MAX_STEERING) {
-    steering.x *= (MAX_STEERING / magnitude);
-    steering.y *= (MAX_STEERING / magnitude);
-  }
+  steering = limitSteering(steering, MAX_STEERING);
+
   return steering;
 }
 
@@ -112,11 +110,7 @@ Vector2 cohesion(std::vector<boid> &vec, boid &b) {
 
   Vector2 steering = {desired.x - b.velocity.x, desired.y - b.velocity.y};
 
-  float magnitude = sqrtf(steering.x * steering.x + steering.y * steering.y);
-  if (magnitude > MAX_STEERING) {
-    steering.x *= (MAX_STEERING / magnitude);
-    steering.y *= (MAX_STEERING / magnitude);
-  }
+  steering = limitSteering(steering, MAX_STEERING);
   return steering;
 }
 
@@ -144,11 +138,7 @@ Vector2 separation(std::vector<boid> &vec, boid &b) {
     steering.y = steering.y / mag * MAX_SPEED;
   }
 
-  float magnitude = sqrtf(steering.x * steering.x + steering.y * steering.y);
-  if (magnitude > MAX_STEERING) {
-    steering.x *= (MAX_STEERING / magnitude);
-    steering.y *= (MAX_STEERING / magnitude);
-  }
+  steering = limitSteering(steering, MAX_STEERING);
   return steering;
 }
 
