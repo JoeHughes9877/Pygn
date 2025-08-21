@@ -89,7 +89,7 @@ Vector2 alignment(std::vector<boid> &vec, boid &b) {
   Vector2 steering = {desired_velocity.x - b.velocity.x,
                       desired_velocity.y - b.velocity.y};
 
-  steering = limitSteering(steering, MAX_STEERING);
+  steering = limit_steering(steering, MAX_STEERING);
 
   return steering;
 }
@@ -110,7 +110,7 @@ Vector2 cohesion(std::vector<boid> &vec, boid &b) {
 
   Vector2 steering = {desired.x - b.velocity.x, desired.y - b.velocity.y};
 
-  steering = limitSteering(steering, MAX_STEERING);
+  steering = limit_steering(steering, MAX_STEERING);
   return steering;
 }
 
@@ -132,13 +132,7 @@ Vector2 separation(std::vector<boid> &vec, boid &b) {
     }
   }
 
-  float mag = sqrtf(steering.x * steering.x + steering.y * steering.y);
-  if (mag > 0) {
-    steering.x = steering.x / mag * MAX_SPEED;
-    steering.y = steering.y / mag * MAX_SPEED;
-  }
-
-  steering = limitSteering(steering, MAX_STEERING);
+  steering = limit_steering(steering, MAX_STEERING);
   return steering;
 }
 
