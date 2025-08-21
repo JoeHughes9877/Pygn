@@ -1,4 +1,3 @@
-#include "../include/main.h"
 #include "../include/boid.h"
 #include "raylib.h"
 #include <bits/stdc++.h>
@@ -7,6 +6,8 @@
 std::vector<boid> boids;
 
 void boid_loop();
+void calc_steering(boid &b, Vector2 alignment_force, Vector2 cohesion_force,
+                   Vector2 separation_force);
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
@@ -36,17 +37,7 @@ void boid_loop() {
       Vector2 cohesion_force = cohesion(boids, boid);
       Vector2 separation_force = separation(boids, boid);
 
-      // Apply forces with weights
-      float separation_weight = 3.5f;
-      float alignment_weight = 1.0f;
-      float cohesion_weight = 1.0f;
-
-      boid.steering.x += (separation_force.x * separation_weight) +
-                         (alignment_force.x * alignment_weight) +
-                         (cohesion_force.x * cohesion_weight);
-      boid.steering.y += (separation_force.y * separation_weight) +
-                         (alignment_force.y * alignment_weight) +
-                         (cohesion_force.y * cohesion_weight);
+      calc_steering(boid, alignment_force, cohesion_force, separation_force);
 
       wrap_boid(boid, SCREEN_WIDTH, SCREEN_HEIGHT);
       render_boid(boid);
@@ -56,5 +47,22 @@ void boid_loop() {
     EndDrawing();
   }
   CloseWindow();
+  return;
+}
+
+void calc_steering(boid &b, Vector2 alignment_force, Vector2 cohesion_force,
+                   Vector2 separation_force) {
+
+  float separation_weight = 3.5f;
+  float alignment_weight = 1.0f;
+  float cohesion_weight = 1.0f;
+
+  b.steering.x += (separation_force.x * separation_weight) +
+                  (alignment_force.x * alignment_weight) +
+                  (cohesion_force.x * cohesion_weight);
+  b.steering.y += (separation_force.y * separation_weight) +
+                  (alignment_force.y * alignment_weight) +
+                  (cohesion_force.y * cohesion_weight);
+
   return;
 }
