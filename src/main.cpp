@@ -6,6 +6,8 @@
 
 std::vector<boid> boids;
 
+void boid_loop();
+
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
@@ -13,6 +15,12 @@ int main(void) {
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Boids simulation");
   SetTargetFPS(120);
 
+  boid_loop();
+
+  return 0;
+}
+
+void boid_loop() {
   while (!WindowShouldClose()) {
     BeginDrawing();
     ClearBackground(BLUE);
@@ -48,5 +56,5 @@ int main(void) {
     EndDrawing();
   }
   CloseWindow();
-  return 0;
+  return;
 }
