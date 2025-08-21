@@ -37,7 +37,7 @@ void normalise_velocity(boid *b, const int MAX_SPEED) {
   }
 }
 
-std::vector<boid> find_neighbours(std::vector<boid> &vec, boid &b,
+std::vector<boid> find_neighbours(std::vector<boid> &vec, const boid &b,
                                   float detect) {
   std::vector<boid> neighbours;
   for (auto &other : vec) {

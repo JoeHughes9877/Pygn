@@ -25,7 +25,7 @@ void create_boid(Vector2 pos) {
   init_movement(arr_len - 1);
 }
 
-void render_boid(boid b) {
+void render_boid(const boid &b) {
   double angle = atan2(b.velocity.y, b.velocity.x);
   float size = 10;
 
@@ -72,7 +72,7 @@ void move_boid(boid *b) {
   b->position.y += b->velocity.y;
 }
 
-Vector2 alignment(std::vector<boid> &vec, boid &b) {
+Vector2 alignment(std::vector<boid> &vec, const boid &b) {
   std::vector<boid> neighbours = find_neighbours(vec, b, 60.0f);
   if (neighbours.empty())
     return {0, 0};
@@ -94,7 +94,7 @@ Vector2 alignment(std::vector<boid> &vec, boid &b) {
   return steering;
 }
 
-Vector2 cohesion(std::vector<boid> &vec, boid &b) {
+Vector2 cohesion(std::vector<boid> &vec, const boid &b) {
   std::vector<boid> neighbours = find_neighbours(vec, b, 80.0f);
   if (neighbours.empty())
     return {0, 0};
@@ -114,7 +114,7 @@ Vector2 cohesion(std::vector<boid> &vec, boid &b) {
   return steering;
 }
 
-Vector2 separation(std::vector<boid> &vec, boid &b) {
+Vector2 separation(std::vector<boid> &vec, const boid &b) {
   std::vector<boid> neighbours = find_neighbours(vec, b, 25.0f);
   if (neighbours.empty())
     return {0, 0};
