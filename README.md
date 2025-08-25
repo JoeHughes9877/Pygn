@@ -15,6 +15,6 @@ Clone the repo and build it with:
 
 ```bash
 git clone https://github.com/JoeHughes9877/Pygn.git
-cd pygn
+cd pygn 
 make
 sudo make install
